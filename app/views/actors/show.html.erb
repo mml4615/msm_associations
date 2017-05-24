@@ -1,0 +1,57 @@
+<div class="page-header">
+  <h3>Actor #<%= @actor.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12 mb-2">
+    <dl class="dl-horizontal">
+      <dt>Name</dt>
+      <dd><%= @actor.name %></dd>
+
+      <dt>Dob</dt>
+      <dd><%= @actor.dob %></dd>
+
+      <dt>Bio</dt>
+      <dd><%= @actor.bio %></dd>
+
+      <dt>Image url</dt>
+      <dd><%= @actor.image_url %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/actors" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/actors/<%= @actor.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_actor/<%= @actor.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+
+    <dt>Number of Characters</dt>
+
+       <% characters = Character.all %>
+       <% count = 0 %>
+       <% actors_movies=[] %>
+
+       <% characters.each do |actor_character| %>
+       <% if actor_character.actor_id == @actor.id %>
+       <% actors_movies.push(Movie.find(actor_character.movie_id).title) %>
+       <% count = count+1 %>
+       <% end %>
+       <% end %>
+
+       <dd><%= count %></dd>
+
+       <dt>Filmography</dt>
+       <% characters.each do |actor_character| %>
+       <% if actor_character.actor_id == @actor.id %>
+       <dd><%= Movie.find(actor_character.movie_id).title %></dd>
+       <% end %>
+       <% end %>
+
+  </div>
+</div>
